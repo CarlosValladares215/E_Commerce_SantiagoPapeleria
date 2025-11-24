@@ -1,3 +1,42 @@
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+import { Home } from './pages/home/home';
+import { Products } from './pages/products/products';
+import { Product } from './pages/product/product';
+import { Categories } from './pages/categories/categories';
+import { Contact } from './pages/contact/contact';
+import { Checkout } from './pages/checkout/checkout';
+import { Tracking } from './pages/tracking/tracking';
+import { Offers } from './pages/offers/offers';
+import { Login } from './pages/login/login';
+import { Register } from './pages/register/register';
+import { NotFound } from './pages/not-found/not-found';
+
+export const routes: Routes = [
+  { path: '', component: Home },
+
+  { path: 'products', component: Products },
+  { path: 'product', component: Product },
+
+  {
+    path: 'categories',
+    component: Categories,
+    children: [
+      {
+        path: 'utiles-escolares',
+        loadComponent: () =>
+          import('./pages/categories/utiles-escolares/utiles-escolares')
+            .then(m => m.UtilesEscolares),
+      },
+    ],
+  },
+
+  { path: 'contact', component: Contact },
+  { path: 'checkout', component: Checkout },
+  { path: 'tracking', component: Tracking },
+  { path: 'offers', component: Offers },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
+
+  { path: '**', component: NotFound },
+];

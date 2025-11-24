@@ -11,6 +11,18 @@
 npm-debug.log
 yarn-error.log
 
+# Angular default
+node_modules/
+dist/
+tmp/
+.out/
+.angular/
+
+# IDEs
+.vscode/
+.idea/
+
+
 # IDEs and editors
 .idea/
 .project

@@ -1,0 +1,200 @@
+<header class="bg-white shadow-lg sticky top-0 z-50">
+
+  <!-- MAIN HEADER -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center py-4">
+
+      <!-- LOGO -->
+      <a routerLink="/" class="flex items-center">
+        <img
+          src="assets/Logo_Grafica.png"
+          alt="Santiago Papelería"
+          class="h-14 w-auto object-contain"
+        />
+      </a>
+
+      <!-- SEARCH BAR -->
+      <div class="flex-1 max-w-2xl mx-8 hidden md:block">
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Buscar productos, marcas o categorías..."
+            class="w-full px-4 py-3 pl-12 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+          <i class="ri-search-line absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg"></i>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="flex items-center space-x-4">
+
+        <!-- TRACKING -->
+        <a routerLink="/tracking"
+           class="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
+          <i class="ri-truck-line text-xl mr-2"></i>
+          <span class="hidden lg:block text-sm">Rastrear Pedido</span>
+        </a>
+
+        <!-- CART -->
+        <a routerLink="/checkout"
+           class="flex items-center text-gray-600 hover:text-blue-600 transition-colors relative">
+          <i class="ri-shopping-cart-line text-xl mr-2"></i>
+          <span class="hidden lg:block text-sm">Carrito</span>
+          <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+        </a>
+
+        <!-- MOBILE MENU BUTTON -->
+        <button class="md:hidden flex items-center" (click)="toggleMobileMenu()">
+          <i class="{{ isMobileMenuOpen() ? 'ri-close-line' : 'ri-menu-line' }} text-xl"></i>
+        </button>
+
+        <!-- NOT AUTHENTICATED -->
+        <ng-container *ngIf="!auth.isAuthenticated()">
+
+          <a routerLink="/login"
+             class="px-4 py-2 text-[#104D73] border border-[#104D73] rounded-lg hover:bg-[#104D73] hover:text-white transition-colors whitespace-nowrap">
+            Iniciar Sesión
+          </a>
+
+          <a routerLink="/register"
+             class="px-4 py-2 bg-[#F2CB07] text-[#012E40] rounded-lg hover:bg-[#F2DF7E] transition-colors whitespace-nowrap">
+            Registrarse
+          </a>
+
+        </ng-container>
+
+        <!-- AUTHENTICATED -->
+        <ng-container *ngIf="auth.isAuthenticated()">
+
+          <div class="relative">
+            <button (click)="toggleProfileMenu()"
+                    class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
+
+              <!-- AVATAR -->
+              <div class="w-10 h-10 bg-gradient-to-br from-[#104D73] to-[#012E40] rounded-full flex items-center justify-center">
+                <span class="text-white font-bold text-sm">
+                  {{ auth.user()?.name?.[0] | uppercase }}
+                </span>
+              </div>
+
+              <!-- NAME -->
+              <div class="hidden lg:block text-left">
+                <p class="text-sm font-medium text-gray-700">{{ auth.user()?.name }}</p>
+                <p class="text-xs text-gray-500 capitalize">{{ auth.user()?.accountType }}</p>
+              </div>
+
+              <i class="ri-arrow-down-s-line text-gray-600 transition-transform"
+                 [class.rotate-180]="isProfileMenuOpen()"></i>
+            </button>
+
+            <!-- PROFILE DROPDOWN -->
+            <div *ngIf="isProfileMenuOpen()"
+                 class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border z-50">
+
+              <div class="p-4 border-b border-gray-100">
+                <p class="font-medium text-gray-800">{{ auth.user()?.name }}</p>
+                <p class="text-sm text-gray-500">{{ auth.user()?.email }}</p>
+                <span class="inline-block mt-2 px-3 py-1 bg-[#F2CB07] text-[#012E40] text-xs font-medium rounded-full capitalize">
+                  {{ auth.user()?.accountType }}
+                </span>
+              </div>
+
+              <div class="py-2">
+                <a routerLink="/profile"
+                   class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
+                   (click)="isProfileMenuOpen.set(false)">
+                  <i class="ri-user-line mr-3 text-[#104D73]"></i>
+                  Mi Perfil
+                </a>
+              </div>
+
+              <div class="border-t border-gray-100 py-2">
+                <button (click)="logout()"
+                        class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-colors">
+                  <i class="ri-logout-box-line mr-3"></i>
+                  Cerrar Sesión
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </ng-container>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NAV BAR -->
+  <div class="bg-[#104D73] text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="flex items-center justify-between py-3">
+
+        <!-- CATEGORIES DROPDOWN -->
+        <div class="relative"
+             (mouseenter)="openCategories()"
+             (mouseleave)="closeCategories()">
+
+          <button class="flex items-center space-x-2 bg-[#F2CB07] text-[#012E40] px-4 py-2 rounded-lg font-medium hover:bg-[#F2DF7E] transition-colors">
+            <i class="ri-menu-line text-lg"></i>
+            <span>Todas las Categorías</span>
+            <i class="ri-arrow-down-s-line text-lg"></i>
+          </button>
+
+          <!-- DROPDOWN -->
+          <div *ngIf="isCategoriesOpen()"
+               class="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-xl border z-50">
+
+            <div class="py-2">
+
+              <a routerLink="/categories"
+                 class="block px-4 py-3 text-[#104D73] font-medium border-b hover:bg-gray-50 transition-colors">
+                <i class="ri-grid-line mr-2"></i>
+                Ver Todas las Categorías
+              </a>
+
+              <a *ngFor="let c of categories"
+                 routerLink="{{ c.path }}"
+                 class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors">
+
+                <div class="flex items-center">
+                  <i class="{{ c.icon }} text-[#104D73] mr-3 text-lg"></i>
+                  <span>{{ c.name }}</span>
+                </div>
+
+                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+                  {{ c.count }}
+                </span>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- NAV MENU DESKTOP -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a routerLink="/" class="hover:text-[#F2CB07] transition-colors font-medium">Inicio</a>
+          <a routerLink="/products" class="hover:text-[#F2CB07] transition-colors font-medium">Productos</a>
+          <a routerLink="/offers" class="hover:text-[#F2CB07] transition-colors font-medium">Ofertas</a>
+          <a routerLink="/contact" class="hover:text-[#F2CB07] transition-colors font-medium">Contacto</a>
+        </nav>
+
+      </div>
+
+      <!-- MOBILE MENU -->
+      <div *ngIf="isMobileMenuOpen()"
+           class="md:hidden bg-white border-t border-gray-200">
+
+        <div class="px-4 py-2 space-y-2">
+          <a routerLink="/" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Inicio</a>
+          <a routerLink="/products" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Productos</a>
+          <a routerLink="/offers" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Ofertas</a>
+          <a routerLink="/contact" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Contacto</a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</header>
