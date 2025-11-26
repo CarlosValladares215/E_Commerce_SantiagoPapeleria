@@ -1,0 +1,29 @@
+<div class="actions">
+
+  <!-- QUANTITY SELECTOR -->
+  <div class="qty-selector">
+    <button (click)="decrease()" [disabled]="quantity <= 1">
+      <i class="ri-subtract-line"></i>
+    </button>
+
+    <span>{{ quantity }}</span>
+
+    <button (click)="increase()" [disabled]="quantity >= stock">
+      <i class="ri-add-line"></i>
+    </button>
+  </div>
+
+  <!-- ADD TO CART BUTTON -->
+  <button
+    class="add-cart"
+    (click)="handleAddToCart()"
+    [disabled]="stock === 0"
+    [class.disabled]="stock === 0">
+
+    <i class="ri-shopping-cart-line"></i>
+
+    <span *ngIf="stock > 0">Agregar</span>
+    <span *ngIf="stock === 0">Agotado</span>
+  </button>
+
+</div>

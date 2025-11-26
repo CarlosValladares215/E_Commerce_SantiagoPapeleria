@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ProductActions } from './components/product-actions/product-actions';
 
 @Component({
   selector: 'app-product',
-  imports: [],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ProductActions
+  ],
   templateUrl: './product.html',
-  styleUrl: './product.scss',
+  styleUrls: ['./product.scss']
 })
-export class Product {
-
-}
+export class Product {}

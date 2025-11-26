@@ -1,0 +1,149 @@
+/* =====================================
+   HEADER — ESTILOS PERSONALIZADOS
+   ===================================== */
+
+/* ---------- GENERAL ---------- */
+header {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ---------- SEARCH BAR ---------- */
+input[type="text"] {
+  transition: box-shadow .25s ease, border .25s ease;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(16, 77, 115, 0.25);
+    border-color: #104D73;
+  }
+}
+
+/* ---------- DROPDOWNS GENERAL ---------- */
+.dropdown-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-closed {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+.dropdown-animate {
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+/* ---------- CATEGORIES DROPDOWN ---------- */
+header .categories-dropdown {
+  @extend .dropdown-animate;
+
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
+}
+
+header .categories-dropdown a {
+  transition: background .15s ease, padding-left .15s ease;
+
+  &:hover {
+    background: #f8f9fa;
+    padding-left: 22px;
+  }
+}
+
+/* ---------- PROFILE MENU ---------- */
+header .profile-menu {
+  @extend .dropdown-animate;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
+}
+
+header .profile-menu a,
+header .profile-menu button {
+  transition: background .15s ease, padding-left .15s ease;
+
+  &:hover {
+    background: #f7f7f7;
+    padding-left: 22px;
+  }
+}
+
+/* ---------- MOBILE MENU ---------- */
+.mobile-menu {
+  animation: mobileFade .25s ease forwards;
+}
+
+@keyframes mobileFade {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- CART BADGE ---------- */
+header .cart-badge {
+  animation: popIn .25s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ---------- AVATAR ---------- */
+header .avatar {
+  transition: transform .25s ease;
+
+  &:hover {
+    transform: scale(1.07);
+  }
+}
+
+/* ---------- NAV HOVER ---------- */
+header nav a {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #F2CB07;
+    transition: width .25s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+/* ---------- CATEGORIES BUTTON ---------- */
+.categories-btn {
+  transition: background .25s ease, transform .15s ease;
+
+  &:active {
+    transform: scale(.95);
+  }
+}
+
+/* ---------- RESPONSIVE FIXES ---------- */
+@media (max-width: 768px) {
+  header .search-bar {
+    display: none !important;
+  }
+
+  header nav a {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* ---------- SMOOTH STICKY EFFECT ---------- */
+header.sticky-active {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, .12);
+  transition: box-shadow .25s ease;
+}

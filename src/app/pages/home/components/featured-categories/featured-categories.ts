@@ -44,13 +44,6 @@ export class FeaturedCategories {
       description: 'Escritorios, sillas, estanterías',
       image: 'assets/home/categories/furtniture.jpg',
       productCount: '1,500+'
-    },
-    {
-      id: 6,
-      name: 'Limpieza',
-      description: 'Productos de aseo y limpieza',
-      image: 'assets/home/categories/cleaning.jpg',
-      productCount: '900+'
     }
   ];
 }
