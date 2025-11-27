@@ -1,1 +1,72 @@
-<p>product works!</p>
+<div class="container mx-auto px-4 py-8">
+
+  <!-- BREADCRUMB -->
+  <app-product-breadcrumb
+    [category]="product().category"
+    [categoryPath]="categoryPath(product().category)"
+    [productName]="product().name">
+  </app-product-breadcrumb>
+
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-6">
+
+    <!-- GALERÍA DE IMÁGENES DEL PRODUCTO -->
+<div class="gallery">
+  <img 
+    *ngFor="let img of product().images" 
+    [src]="img"
+    class="gallery-img">
+</div>
+
+
+    <!-- INFO GENERAL -->
+    <div class="space-y-6">
+
+      <!-- INFO DEL PRODUCTO -->
+      <app-product-info
+        [product]="product()">
+      </app-product-info>
+
+      <!-- PRECIO -->
+      <app-product-price
+        [price]="product().price"
+        [originalPrice]="product().originalPrice"
+        [discount]="product().discount"
+        [isOffer]="product().isOffer">
+      </app-product-price>
+
+      <!-- STOCK -->
+      <app-product-stock
+        [stock]="product().stock">
+      </app-product-stock>
+
+      <!-- ACCIONES (AGREGAR AL CARRITO, ETC) -->
+      <app-product-actions
+        [product]="product()">
+      </app-product-actions>
+
+    </div>
+  </div>
+
+  <!-- ESPECIFICACIONES -->
+  <div class="mt-12">
+    <app-product-specs
+      [specs]="product().specs">
+    </app-product-specs>
+  </div>
+
+  <!-- RESEÑAS -->
+  <div class="mt-12">
+    <app-product-reviews
+      [reviews]="product().reviews">
+    </app-product-reviews>
+  </div>
+
+  <!-- RELACIONADOS -->
+  <div class="mt-12">
+    <app-product-related
+      [products]="related()">
+    </app-product-related>
+  </div>
+
+</div>

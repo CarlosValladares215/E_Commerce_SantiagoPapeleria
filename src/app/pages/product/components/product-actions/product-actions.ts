@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductActions {
 
+  @Input() product: any;
   // Recibe el estado del producto desde el padre
   @Input() stock: number = 0;
   @Input() productId!: number;

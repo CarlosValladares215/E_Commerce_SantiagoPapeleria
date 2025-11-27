@@ -1,4 +1,4 @@
-<header class="bg-white shadow-lg sticky top-0 z-50">
+<header class="shadow-lg sticky top-0 z-50">
 
   <!-- MAIN HEADER -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@
            class="flex items-center text-gray-600 hover:text-blue-600 transition-colors relative">
           <i class="ri-shopping-cart-line text-xl mr-2"></i>
           <span class="hidden lg:block text-sm">Carrito</span>
-          <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+          <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center cart-badge">3</span>
         </a>
 
         <!-- MOBILE TOGGLE -->
@@ -77,7 +77,7 @@
                     class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
 
               <!-- AVATAR -->
-              <div class="w-10 h-10 bg-gradient-to-br from-[#104D73] to-[#012E40] rounded-full flex items-center justify-center">
+              <div class="w-10 h-10 bg-gradient-to-br from-[#104D73] to-[#012E40] rounded-full flex items-center justify-center avatar">
                 <span class="text-white font-bold text-sm">
                   {{ auth.user()?.name?.[0] | uppercase }}
                 </span>
@@ -94,9 +94,9 @@
 
             <!-- DROPDOWN -->
             <div *ngIf="isProfileMenuOpen()"
-                 class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border z-50">
+                 class="absolute right-0 mt-2 w-64 rounded-lg shadow-xl border z-50 profile-menu">
 
-              <div class="p-4 border-b border-gray-100">
+              <div class="p-4 border-b border-gray-300">
                 <p class="font-medium text-gray-800">{{ auth.user()?.name }}</p>
                 <p class="text-sm text-gray-500">{{ auth.user()?.email }}</p>
                 <span class="inline-block mt-2 px-3 py-1 bg-[#F2CB07] text-[#012E40] text-xs font-medium rounded-full capitalize">
@@ -113,7 +113,7 @@
                 </a>
               </div>
 
-              <div class="border-t border-gray-100 py-2">
+              <div class="border-t border-gray-300 py-2">
                 <button (click)="logout()"
                         class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-colors">
                   <i class="ri-logout-box-line mr-3"></i>
@@ -140,7 +140,7 @@
         <!-- CATEGORIES DROPDOWN -->
         <div class="relative">
           <button (click)="toggleCategories()"
-            class="flex items-center space-x-2 bg-[#F2CB07] text-[#012E40] px-4 py-2 rounded-lg font-medium hover:bg-[#F2DF7E] transition-colors cursor-pointer">
+            class="flex items-center space-x-2 bg-[#F2CB07] text-[#012E40] px-4 py-2 rounded-lg font-medium hover:bg-[#F2DF7E] transition-colors cursor-pointer categories-btn">
             <i class="ri-menu-line text-lg"></i>
             <span>Todas las Categorías</span>
             <i class="ri-arrow-down-s-line text-lg transition-transform"
@@ -149,13 +149,13 @@
 
           <!-- DROPDOWN -->
           <div *ngIf="isCategoriesOpen()"
-               class="absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-xl border z-50">
+               class="absolute top-full left-0 mt-1 w-80 rounded-lg shadow-xl border z-50 categories-dropdown">
 
             <div class="py-2">
 
               <a routerLink="/categories"
                  (click)="closeCategories()"
-                 class="block px-4 py-3 text-[#104D73] font-medium border-b hover:bg-gray-50 transition-colors">
+                 class="block px-4 py-3 text-[#104D73] font-medium border-b border-gray-300 hover:bg-gray-50 transition-colors">
                 <i class="ri-grid-line mr-2"></i>
                 Ver Todas las Categorías
               </a>
@@ -190,7 +190,7 @@
       </div>
 
       <!-- MOBILE MENU -->
-      <div *ngIf="isMobileMenuOpen()" class="md:hidden bg-white border-t border-gray-200">
+      <div *ngIf="isMobileMenuOpen()" class="md:hidden border-t border-gray-300 mobile-menu">
 
         <div class="px-4 py-2 space-y-2">
           <a routerLink="/" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Inicio</a>

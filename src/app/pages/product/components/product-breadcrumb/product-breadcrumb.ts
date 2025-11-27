@@ -9,9 +9,9 @@ import { RouterLink } from '@angular/router';
   templateUrl: './product-breadcrumb.html',
   styleUrls: ['./product-breadcrumb.scss']
 })
-export class ProductBreadcrumbComponent {
+export class ProductBreadcrumb {
 
-  @Input() category: string = '';
-  @Input() categoryPath: string = '';
-  @Input() productName?: string;
+  @Input() category!: string;
+  @Input() categoryPath!: string;
+  @Input() productName!: string;
 }

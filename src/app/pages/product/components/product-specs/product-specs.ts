@@ -1,11 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+export interface ProductSpec {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-product-specs',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './product-specs.html',
-  styleUrl: './product-specs.scss',
+  styleUrls: ['./product-specs.scss'],
 })
 export class ProductSpecs {
-
+  @Input() specs: ProductSpec[] = [];
 }

@@ -15,7 +15,7 @@ import { categoriesRoutes } from './pages/categories/categories.routes';
 export const routes: Routes = [
   { path: '', component: Home },
 
-  { path: 'product', component: Product },
+  { path: 'products/:id', component: Product },
 
   {
     path: 'categories',

@@ -51,7 +51,7 @@ export class Offers {
     },
     {
       id: 3, name: 'Calculadora Científica Casio FX-991ES Plus', originalPrice: 45.00, discountPrice: 29.99, discount: 33,
-      image: 'https://readdy.ai/api/search-image?query=Casio%20FX-991ES%20Plus%20scientific%20calculator%20black%20professional%20device%20on%20clean%20white%20background%2C%20technology%20education%20equipment%20photography&width=300&height=300&seq=calculator-offer&orientation=squarish',
+      image: 'assets/home/products/casio.jpg',
       category: 'tech', stock: 42, endDate: '2024-02-20'
     },
     {

@@ -49,84 +49,85 @@ export class SuministrosOficina {
   ];
 
   readonly products: Product[] = [
-    {
-      id: 1,
-      name: 'Resma Papel Bond A4 75g x500 Hojas',
-      price: 4.50,
-      originalPrice: 5.50,
-      image: 'https://readdy.ai/api/search-image?query=Professional%20A4%20bond%20paper%20ream&width=400&height=400&seq=office-paper-1',
-      category: 'papel',
-      stock: 245,
-      isNew: false,
-      discount: 18,
-    },
-    {
-      id: 2,
-      name: 'Archivador Palanca Oficio Norma',
-      price: 3.75,
-      originalPrice: null,
-      image: 'https://readdy.ai/api/search-image?query=lever%20arch%20file%20folder&width=400&height=400&seq=office-binder-2',
-      category: 'archivadores',
-      stock: 156,
-      isNew: true,
-      discount: 0,
-    },
-    {
-      id: 3,
-      name: 'Grapadora de Escritorio Rapid HD70',
-      price: 18.00,
-      originalPrice: 22.00,
-      image: 'https://readdy.ai/api/search-image?query=Rapid%20HD70%20heavy%20duty%20stapler&width=400&height=400&seq=office-stapler-3',
-      category: 'grapadoras',
-      stock: 34,
-      isNew: false,
-      discount: 18,
-    },
-    {
-      id: 4,
-      name: 'Organizador de Escritorio 5 Compartimentos',
-      price: 12.50,
-      originalPrice: null,
-      image: 'https://readdy.ai/api/search-image?query=desk%20organizer%205%20compartments&width=400&height=400&seq=office-organizer-4',
-      category: 'organizadores',
-      stock: 67,
-      isNew: true,
-      discount: 0,
-    },
-    {
-      id: 5,
-      name: 'Etiquetas Autoadhesivas Avery 100 Hojas',
-      price: 8.25,
-      originalPrice: 10.00,
-      image: 'https://readdy.ai/api/search-image?query=Avery%20labels%20100%20sheets&width=400&height=400&seq=office-labels-5',
-      category: 'etiquetas',
-      stock: 89,
-      isNew: false,
-      discount: 18,
-    },
-    {
-      id: 6,
-      name: 'Calculadora Científica Casio FX-991',
-      price: 25.00,
-      originalPrice: null,
-      image: 'https://readdy.ai/api/search-image?query=Casio%20FX-991%20scientific%20calculator&width=400&height=400&seq=office-calculator-6',
-      category: 'calculadoras',
-      stock: 45,
-      isNew: true,
-      discount: 0,
-    },
-    {
-      id: 7,
-      name: 'Sobres Manila Oficio x100',
-      price: 6.50,
-      originalPrice: 7.50,
-      image: 'https://readdy.ai/api/search-image?query=Manila%20envelopes%20legal&width=400&height=400&seq=office-envelopes-7',
-      category: 'papel',
-      stock: 178,
-      isNew: false,
-      discount: 13,
-    },
-  ];
+  {
+    id: 1,
+    name: 'Resma Papel Bond A4 75g x500 Hojas',
+    price: 4.50,
+    originalPrice: 5.50,
+    image: 'assets/Filtro/oficina/img1.jpg',
+    category: 'papel',
+    stock: 245,
+    isNew: false,
+    discount: 18,
+  },
+  {
+    id: 2,
+    name: 'Archivador Palanca Oficio Norma',
+    price: 3.75,
+    originalPrice: null,
+    image: 'assets/Filtro/oficina/img2.jpg',
+    category: 'archivadores',
+    stock: 156,
+    isNew: true,
+    discount: 0,
+  },
+  {
+    id: 3,
+    name: 'Grapadora de Escritorio Rapid HD70',
+    price: 18.00,
+    originalPrice: 22.00,
+    image: 'assets/Filtro/oficina/img3.jpg',
+    category: 'grapadoras',
+    stock: 34,
+    isNew: false,
+    discount: 18,
+  },
+  {
+    id: 4,
+    name: 'Organizador de Escritorio 5 Compartimentos',
+    price: 12.50,
+    originalPrice: null,
+    image: 'assets/Filtro/oficina/img4.jpg',
+    category: 'organizadores',
+    stock: 67,
+    isNew: true,
+    discount: 0,
+  },
+  {
+    id: 5,
+    name: 'Etiquetas Autoadhesivas Avery 100 Hojas',
+    price: 8.25,
+    originalPrice: 10.00,
+    image: 'assets/Filtro/oficina/img5.jpg',
+    category: 'etiquetas',
+    stock: 89,
+    isNew: false,
+    discount: 18,
+  },
+  {
+    id: 6,
+    name: 'Calculadora Científica Casio FX-991',
+    price: 25.00,
+    originalPrice: null,
+    image: 'assets/Filtro/oficina/img6.jpg',
+    category: 'calculadoras',
+    stock: 45,
+    isNew: true,
+    discount: 0,
+  },
+  {
+    id: 7,
+    name: 'Sobres Manila Oficio x100',
+    price: 6.50,
+    originalPrice: 7.50,
+    image: 'assets/Filtro/oficina/img7.jpg',
+    category: 'papel',
+    stock: 178,
+    isNew: false,
+    discount: 13,
+  },
+];
+
 
   /* ------------- computed signals ------------- */
   filteredProducts = signal<Product[]>([]);
@@ -220,6 +221,11 @@ export class SuministrosOficina {
   }
 
   navigateToProduct(id: number) {
+  window.location.href = 'http://localhost:4200/products/1';
+}
+  /*
+  navigateToProduct(id: number) {
     this.router.navigate(['/product'], { queryParams: { id } });
   }
+    */
 }

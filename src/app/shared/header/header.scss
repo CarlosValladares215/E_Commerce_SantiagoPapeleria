@@ -4,6 +4,7 @@
 
 /* ---------- GENERAL ---------- */
 header {
+  background-color: #F2F2F2;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -38,7 +39,7 @@ input[type="text"] {
 /* ---------- CATEGORIES DROPDOWN ---------- */
 header .categories-dropdown {
   @extend .dropdown-animate;
-
+  background-color: #F2F2F2;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
@@ -56,6 +57,7 @@ header .categories-dropdown a {
 /* ---------- PROFILE MENU ---------- */
 header .profile-menu {
   @extend .dropdown-animate;
+  background-color: #F2F2F2;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 35px rgba(0, 0, 0, 0.12);
@@ -73,6 +75,7 @@ header .profile-menu button {
 
 /* ---------- MOBILE MENU ---------- */
 .mobile-menu {
+  background-color: #F2F2F2;
   animation: mobileFade .25s ease forwards;
 }
 

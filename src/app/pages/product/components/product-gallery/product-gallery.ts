@@ -1,11 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+export interface ProductGalleryItem {
+  id: number;
+  name: string;
+  brand: string;
+  price: number;
+  originalPrice?: number;
+  discount?: number;
+  image: string;
+  stock: number;
+  category: string;
+  isNew: boolean;
+  isOffer?: boolean;
+  rating?: number;
+  reviews?: number;
+}
 
 @Component({
   selector: 'app-product-gallery',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './product-gallery.html',
-  styleUrl: './product-gallery.scss',
+  styleUrls: ['./product-gallery.scss'],
 })
 export class ProductGallery {
-
+  @Input() products: ProductGalleryItem[] = [];
 }

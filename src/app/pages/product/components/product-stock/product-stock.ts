@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-stock',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './product-stock.html',
-  styleUrl: './product-stock.scss',
+  styleUrls: ['./product-stock.scss'],
 })
 export class ProductStock {
-
+  @Input() stock: number | null = null;
 }
