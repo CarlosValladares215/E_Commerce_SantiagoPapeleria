@@ -1,13 +1,6 @@
 import { Component, Input, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-export interface ProductReview {
-  id: number;
-  user: string;
-  rating: number; // 1-5
-  comment: string;
-  date: string; // ISO o texto
-}
+import { ProductReview } from '../../../../models/product.model';
 
 @Component({
   selector: 'app-product-reviews',
@@ -17,11 +10,11 @@ export interface ProductReview {
   styleUrls: ['./product-reviews.scss'],
 })
 export class ProductReviews {
-  @Input() reviews: ProductReview[] = [];
+  @Input() reviews: ProductReview[] | null | undefined = [];
 
   // Promedio de calificación
   avgRating = computed(() => {
-    if (this.reviews.length === 0) return 0;
+    if (!this.reviews || this.reviews.length === 0) return 0;
     return (
       this.reviews.reduce((acc, r) => acc + r.rating, 0) / this.reviews.length
     );
@@ -29,11 +22,12 @@ export class ProductReviews {
 
   // Cuántas reseñas por estrella
   ratingCount(stars: number): number {
+    if (!this.reviews) return 0;
     return this.reviews.filter(r => r.rating === stars).length;
   }
 
   ratingPercent(stars: number): number {
-    if (this.reviews.length === 0) return 0;
+    if (!this.reviews || this.reviews.length === 0) return 0;
     return Math.round((this.ratingCount(stars) / this.reviews.length) * 100);
   }
 

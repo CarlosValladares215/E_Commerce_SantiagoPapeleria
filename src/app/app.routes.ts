@@ -15,7 +15,8 @@ import { categoriesRoutes } from './pages/categories/categories.routes';
 export const routes: Routes = [
   { path: '', component: Home },
 
-  { path: 'products/:id', component: Product },
+  { path: 'product/:id', component: Product },
+  { path: 'products', loadComponent: () => import('./pages/products/products.component').then(m => m.ProductsComponent), pathMatch: 'full' },
 
   {
     path: 'categories',

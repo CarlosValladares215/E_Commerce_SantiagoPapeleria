@@ -1,18 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Product } from '../../../../models/product.model';
 
-export interface ProductInfoData {
-  id: number;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  discount?: number;
-  stock: number;
-  category: string;
-  isNew: boolean;
-  description?: string;
-}
 
 @Component({
   selector: 'app-product-info',
@@ -22,23 +11,21 @@ export interface ProductInfoData {
   styleUrls: ['./product-info.scss'],
 })
 export class ProductInfo {
-  @Input() product!: ProductInfoData;
 
-  /** Estado de stock según React */
+  @Input() product!: Product;
+
   get stockStatus(): 'in' | 'low' | 'out' {
     if (this.product.stock === 0) return 'out';
     if (this.product.stock > 0 && this.product.stock < 10) return 'low';
     return 'in';
   }
 
-  /** Texto dinámico para el stock */
   get stockText(): string {
     if (this.product.stock === 0) return 'Agotado';
     if (this.product.stock < 10) return `Solo ${this.product.stock} disponibles`;
     return 'En stock';
   }
 
-  /** Mostrar descripción fallback si no existe */
   get safeDescription(): string {
     return (
       this.product.description ||

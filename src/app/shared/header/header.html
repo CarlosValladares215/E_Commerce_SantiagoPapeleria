@@ -1,207 +1,273 @@
-<header class="shadow-lg sticky top-0 z-50">
+<header class="header">
 
-  <!-- MAIN HEADER -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center py-4">
+  <!-- TOP BAR -->
+  <div class="header-top">
 
-      <!-- LOGO -->
-      <a routerLink="/" class="flex items-center">
-        <img
-          src="assets/Logo_Grafica.png"
-          alt="Santiago Papelería"
-          class="h-14 w-auto object-contain"
-        />
+    <!-- Botón Hamburguesa (móvil) -->
+    <button class="menu-toggle" type="button" (click)="toggleMobileMenu()"
+      [attr.aria-label]="isMobileMenuOpen() ? 'Cerrar menú principal' : 'Abrir menú principal'">
+      <i class="ri-menu-line" *ngIf="!isMobileMenuOpen()"></i>
+      <i class="ri-close-line" *ngIf="isMobileMenuOpen()"></i>
+    </button>
+
+    <!-- LOGO -->
+    <div class="logo">
+      <a routerLink="/">
+        <img src="assets/Logo_Grafica.png" alt="Logo Santiago Papelería" />
+      </a>
+    </div>
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+      <i class="ri-search-line search-icon"></i>
+      <input type="text" placeholder="Buscar productos, marcas o categorías..." [(ngModel)]="searchQuery"
+        (keyup.enter)="performSearch()" />
+    </div>
+
+    <!-- ACCIONES (tracking, carrito, auth) -->
+    <div class="header-actions">
+
+      <!-- Rastreo -->
+      <a routerLink="/tracking" class="header-icon-action" title="Rastrear Pedido">
+        <i class="ri-truck-line"></i>
       </a>
 
-      <!-- SEARCH BAR -->
-      <div class="flex-1 max-w-2xl mx-8 hidden md:block">
-        <div class="relative">
-          <input
-            type="text"
-            placeholder="Buscar productos, marcas o categorías..."
-            [(ngModel)]="searchQuery"
-            (keyup.enter)="performSearch()"
-            class="w-full px-4 py-3 pl-12 pr-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
+      <!-- Carrito -->
+      <a routerLink="/checkout" class="header-icon-action cart-link" title="Carrito de Compras">
+        <i class="ri-shopping-cart-line"></i>
+        <span class="cart-badge" *ngIf="cartCount > 0">
+          {{ cartCount }}
+        </span>
+      </a>
 
-          <button (click)="performSearch()"
-            class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-            <i class="ri-search-line text-lg"></i>
+      <!-- NO AUTENTICADO (ESCRITORIO) -->
+      <ng-container *ngIf="!auth.isAuthenticated(); else loggedInDesktop">
+        <a routerLink="/login" class="btn btn-secondary desktop-only">
+          Iniciar Sesión
+        </a>
+
+        <a routerLink="/register" class="btn btn-primary desktop-only">
+          Registrarse
+        </a>
+      </ng-container>
+
+      <!-- AUTENTICADO (ESCRITORIO) -->
+      <ng-template #loggedInDesktop>
+        <div class="profile-wrapper desktop-only">
+          <button type="button" class="profile-trigger" (click)="toggleProfileMenu()">
+
+            <!-- Avatar -->
+            <div class="avatar">
+              <span>
+                {{ auth.user()?.name?.[0] | uppercase }}
+              </span>
+            </div>
+
+            <!-- Nombre / tipo de cuenta -->
+            <div class="profile-text">
+              <p class="profile-name">
+                {{ auth.user()?.name }}
+              </p>
+              <p class="profile-type">
+                {{ auth.user()?.accountType }}
+              </p>
+            </div>
+
+            <i class="ri-arrow-down-s-line profile-arrow" [class.rotate]="isProfileMenuOpen()">
+            </i>
           </button>
+
+          <!-- Dropdown perfil -->
+          <div class="profile-menu" *ngIf="isProfileMenuOpen()">
+
+            <div class="profile-menu-header">
+              <p class="profile-menu-name">
+                {{ auth.user()?.name }}
+              </p>
+              <p class="profile-menu-email">
+                {{ auth.user()?.email }}
+              </p>
+              <span class="profile-menu-tag">
+                {{ auth.user()?.accountType }}
+              </span>
+            </div>
+
+            <div class="profile-menu-body">
+              <a routerLink="/profile" (click)="onNavLinkClick()" class="profile-menu-item">
+                <i class="ri-user-line"></i>
+                <span>Mi Perfil</span>
+              </a>
+            </div>
+
+            <div class="profile-menu-footer">
+              <button type="button" (click)="logout()" class="profile-menu-item logout">
+                <i class="ri-logout-box-line"></i>
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          </div>
         </div>
+      </ng-template>
+
+    </div>
+  </div>
+
+  <!-- NAVBAR (ESCRITORIO + MÓVIL) -->
+  <div class="header-bottom">
+    <nav class="main-nav" [class.open]="isMobileMenuOpen()">
+
+      <div class="nav-container">
+        <ul>
+          <li>
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"
+              (click)="onNavLinkClick()">
+              INICIO
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/products" routerLinkActive="active" (click)="onNavLinkClick()">
+              PRODUCTOS
+            </a>
+          </li>
+
+          <li (mouseenter)="openMega('bazar')" (mouseleave)="scheduleCloseMega()">
+            <a routerLink="/bazar" routerLinkActive="active" (click)="onNavLinkClick()">
+              BAZAR
+            </a>
+          </li>
+
+          <li (mouseenter)="openMega('papeleria')" (mouseleave)="scheduleCloseMega()">
+            <a routerLink="/papeleria" routerLinkActive="active" (click)="onNavLinkClick()">
+              PAPELERÍA
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/oficina" routerLinkActive="active" (click)="onNavLinkClick()">
+              OFICINA
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/offers" routerLinkActive="active" (click)="onNavLinkClick()">
+              PROMOCIONES
+            </a>
+          </li>
+
+          <li>
+            <a routerLink="/contact" routerLinkActive="active" (click)="onNavLinkClick()">
+              CONTACTO
+            </a>
+          </li>
+        </ul>
       </div>
 
-      <!-- RIGHT SECTION -->
-      <div class="flex items-center space-x-4">
-
-        <!-- TRACKING -->
-        <a routerLink="/tracking"
-           class="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
-          <i class="ri-truck-line text-xl mr-2"></i>
-          <span class="hidden lg:block text-sm">Rastrear Pedido</span>
-        </a>
-
-        <!-- CART -->
-        <a routerLink="/checkout"
-           class="flex items-center text-gray-600 hover:text-blue-600 transition-colors relative">
-          <i class="ri-shopping-cart-line text-xl mr-2"></i>
-          <span class="hidden lg:block text-sm">Carrito</span>
-          <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center cart-badge">3</span>
-        </a>
-
-        <!-- MOBILE TOGGLE -->
-        <button class="md:hidden flex items-center" (click)="toggleMobileMenu()">
-          <i class="{{ isMobileMenuOpen() ? 'ri-close-line' : 'ri-menu-line' }} text-xl"></i>
-        </button>
-
-        <!-- AUTH CONTROL -->
-        <!-- NOT AUTHENTICATED -->
-        <ng-container *ngIf="!auth.isAuthenticated()">
-
-          <a routerLink="/login"
-             class="px-4 py-2 text-[#104D73] border border-[#104D73] rounded-lg hover:bg-[#104D73] hover:text-white transition-colors whitespace-nowrap">
+      <!-- ACCIONES DENTRO DEL MENÚ MÓVIL -->
+      <div class="mobile-actions">
+        <!-- NO AUTENTICADO (MÓVIL) -->
+        <ng-container *ngIf="!auth.isAuthenticated(); else mobileLoggedIn">
+          <a routerLink="/login" class="btn btn-secondary" (click)="onNavLinkClick()">
             Iniciar Sesión
           </a>
-
-          <a routerLink="/register"
-             class="px-4 py-2 bg-[#F2CB07] text-[#012E40] rounded-lg hover:bg-[#F2DF7E] transition-colors whitespace-nowrap">
+          <a routerLink="/register" class="btn btn-primary" (click)="onNavLinkClick()">
             Registrarse
           </a>
-
         </ng-container>
 
-        <!-- AUTHENTICATED -->
-        <ng-container *ngIf="auth.isAuthenticated()">
-
-          <div class="relative">
-            <button (click)="toggleProfileMenu()"
-                    class="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors">
-
-              <!-- AVATAR -->
-              <div class="w-10 h-10 bg-gradient-to-br from-[#104D73] to-[#012E40] rounded-full flex items-center justify-center avatar">
-                <span class="text-white font-bold text-sm">
-                  {{ auth.user()?.name?.[0] | uppercase }}
-                </span>
-              </div>
-
-              <div class="hidden lg:block text-left">
-                <p class="text-sm font-medium text-gray-700">{{ auth.user()?.name }}</p>
-                <p class="text-xs text-gray-500 capitalize">{{ auth.user()?.accountType }}</p>
-              </div>
-
-              <i class="ri-arrow-down-s-line text-gray-600 transition-transform"
-                 [class.rotate-180]="isProfileMenuOpen()"></i>
-            </button>
-
-            <!-- DROPDOWN -->
-            <div *ngIf="isProfileMenuOpen()"
-                 class="absolute right-0 mt-2 w-64 rounded-lg shadow-xl border z-50 profile-menu">
-
-              <div class="p-4 border-b border-gray-300">
-                <p class="font-medium text-gray-800">{{ auth.user()?.name }}</p>
-                <p class="text-sm text-gray-500">{{ auth.user()?.email }}</p>
-                <span class="inline-block mt-2 px-3 py-1 bg-[#F2CB07] text-[#012E40] text-xs font-medium rounded-full capitalize">
-                  {{ auth.user()?.accountType }}
-                </span>
-              </div>
-
-              <div class="py-2">
-                <a routerLink="/profile"
-                   class="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
-                   (click)="closeProfileMenu()">
-                  <i class="ri-user-line mr-3 text-[#104D73]"></i>
-                  Mi Perfil
-                </a>
-              </div>
-
-              <div class="border-t border-gray-300 py-2">
-                <button (click)="logout()"
-                        class="flex items-center w-full px-4 py-3 text-red-600 hover:bg-red-50 transition-colors">
-                  <i class="ri-logout-box-line mr-3"></i>
-                  Cerrar Sesión
-                </button>
-              </div>
-
-            </div>
-          </div>
-
-        </ng-container>
-
-      </div>
-
-    </div>
-  </div>
-
-  <!-- NAVBAR -->
-  <div class="bg-[#104D73] text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-      <div class="flex items-center justify-between py-3">
-
-        <!-- CATEGORIES DROPDOWN -->
-        <div class="relative">
-          <button (click)="toggleCategories()"
-            class="flex items-center space-x-2 bg-[#F2CB07] text-[#012E40] px-4 py-2 rounded-lg font-medium hover:bg-[#F2DF7E] transition-colors cursor-pointer categories-btn">
-            <i class="ri-menu-line text-lg"></i>
-            <span>Todas las Categorías</span>
-            <i class="ri-arrow-down-s-line text-lg transition-transform"
-               [class.rotate-180]="isCategoriesOpen()"></i>
+        <!-- AUTENTICADO (MÓVIL) -->
+        <ng-template #mobileLoggedIn>
+          <button type="button" class="btn btn-secondary" (click)="goToProfile()">
+            Mi Perfil
           </button>
-
-          <!-- DROPDOWN -->
-          <div *ngIf="isCategoriesOpen()"
-               class="absolute top-full left-0 mt-1 w-80 rounded-lg shadow-xl border z-50 categories-dropdown">
-
-            <div class="py-2">
-
-              <a routerLink="/categories"
-                 (click)="closeCategories()"
-                 class="block px-4 py-3 text-[#104D73] font-medium border-b border-gray-300 hover:bg-gray-50 transition-colors">
-                <i class="ri-grid-line mr-2"></i>
-                Ver Todas las Categorías
-              </a>
-
-              <a *ngFor="let c of categories"
-                 [routerLink]="c.path"
-                 (click)="closeCategories()"
-                 class="flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer">
-
-                <div class="flex items-center">
-                  <i class="{{ c.icon }} text-[#104D73] mr-3 text-lg"></i>
-                  <span>{{ c.name }}</span>
-                </div>
-
-                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                  {{ c.count }}
-                </span>
-              </a>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- DESKTOP NAV -->
-        <nav class="hidden md:flex items-center space-x-8">
-          <a routerLink="/" class="hover:text-[#F2CB07] transition-colors font-medium">Inicio</a>
-          <a routerLink="/products" class="hover:text-[#F2CB07] transition-colors font-medium">Productos</a>
-          <a routerLink="/offers" class="hover:text-[#F2CB07] transition-colors font-medium">Ofertas</a>
-          <a routerLink="/contact" class="hover:text-[#F2CB07] transition-colors font-medium">Contacto</a>
-        </nav>
-
+          <button type="button" class="btn btn-primary" (click)="logout()">
+            Cerrar Sesión
+          </button>
+        </ng-template>
       </div>
 
-      <!-- MOBILE MENU -->
-      <div *ngIf="isMobileMenuOpen()" class="md:hidden border-t border-gray-300 mobile-menu">
+    </nav>
+  </div>
+</header>
 
-        <div class="px-4 py-2 space-y-2">
-          <a routerLink="/" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Inicio</a>
-          <a routerLink="/products" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Productos</a>
-          <a routerLink="/offers" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Ofertas</a>
-          <a routerLink="/contact" class="block py-2 text-gray-700 hover:text-blue-600 font-medium" (click)="closeMobileMenu()">Contacto</a>
-        </div>
+<!-- MEGA MENÚ BAZAR -->
+<div class="mega-menu" [class.show]="megaMenu() === 'bazar'" (mouseenter)="cancelCloseMega()"
+  (mouseleave)="scheduleCloseMega()">
 
-      </div>
+  <div class="mega-container">
+    <div class="mega-col">
+      <div class="mega-title">Accesorios</div>
+      <a class="mega-item" routerLink="/bazar/bisuteria">
+        <i class="ri-gem-line"></i>
+        <span>Bisutería</span>
+      </a>
+      <a class="mega-item" routerLink="/bazar/bolsos">
+        <i class="ri-handbag-line"></i>
+        <span>Bolsos</span>
+      </a>
+    </div>
 
+    <div class="mega-col">
+      <div class="mega-title">Hogar & Familia</div>
+      <a class="mega-item" routerLink="/bazar/hogar">
+        <i class="ri-home-4-line"></i>
+        <span>Hogar</span>
+      </a>
+      <a class="mega-item" routerLink="/bazar/navidad">
+        <i class="ri-tree-line"></i>
+        <span>Navidad</span>
+      </a>
+      <a class="mega-item" routerLink="/bazar/comida">
+        <i class="ri-restaurant-line"></i>
+        <span>Comida</span>
+      </a>
     </div>
   </div>
+</div>
 
-</header>
+<!-- MEGA MENÚ PAPELERÍA -->
+<div class="mega-menu" [class.show]="megaMenu() === 'papeleria'" (mouseenter)="cancelCloseMega()"
+  (mouseleave)="scheduleCloseMega()">
+
+  <div class="mega-container">
+    <div class="mega-col">
+      <div class="mega-title">Papelería</div>
+      <a class="mega-item" routerLink="/papeleria/carton">
+        <i class="ri-square-line"></i>
+        <span>Cartón</span>
+      </a>
+      <a class="mega-item" routerLink="/papeleria/cartulina">
+        <i class="ri-file-copy-line"></i>
+        <span>Cartulina</span>
+      </a>
+      <a class="mega-item" routerLink="/papeleria/papel">
+        <i class="ri-attachment-2"></i>
+        <span>Papel</span>
+      </a>
+    </div>
+
+    <div class="mega-col">
+      <div class="mega-title">Productos de Arte</div>
+      <a class="mega-item" routerLink="/papeleria/arquitectura">
+        <i class="ri-compasses-2-line"></i>
+        <span>Arquitectura</span>
+      </a>
+      <a class="mega-item" routerLink="/papeleria/manualidades">
+        <i class="ri-scissors-2-line"></i>
+        <span>Manualidades</span>
+      </a>
+      <a class="mega-item" routerLink="/papeleria/pinturas">
+        <i class="ri-paint-brush-line"></i>
+        <span>Pinturas</span>
+      </a>
+    </div>
+
+    <div class="mega-col">
+      <div class="mega-title">Útiles Escolares</div>
+      <a class="mega-item" routerLink="/papeleria/utiles-escolares">
+        <i class="ri-book-2-line"></i>
+        <span>Útiles Escolares</span>
+      </a>
+    </div>
+  </div>
+</div>

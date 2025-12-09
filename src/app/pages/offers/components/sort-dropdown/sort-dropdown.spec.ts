@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortDropdown } from './sort-dropdown';
+import { SortDropdownComponent } from './sort-dropdown';
 
 describe('SortDropdown', () => {
-  let component: SortDropdown;
-  let fixture: ComponentFixture<SortDropdown>;
+  let component: SortDropdownComponent;
+  let fixture: ComponentFixture<SortDropdownComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SortDropdown]
+      imports: [SortDropdownComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(SortDropdown);
+    fixture = TestBed.createComponent(SortDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

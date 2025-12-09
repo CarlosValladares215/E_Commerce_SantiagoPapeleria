@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface ProductGalleryItem {
+export interface ProductGrid {
   id: number;
   name: string;
   brand: string;
@@ -24,6 +24,6 @@ export interface ProductGalleryItem {
   templateUrl: './product-gallery.html',
   styleUrls: ['./product-gallery.scss'],
 })
-export class ProductGallery {
-  @Input() products: ProductGalleryItem[] = [];
+export class ProductGrid {
+  @Input() products: ProductGrid[] = [];
 }
